@@ -23,11 +23,8 @@ func (cfs *CloudflareService) GetList() (*cloudflareapi.ZonesResponse, error) {
 	r, err := client.ListZonesContext(context.Background())
 	if err != nil {
 		fmt.Println("获取区域列表失败：", err)
-		fmt.Println(err.Error())
 		return nil, err
 	}
-	fmt.Println(r.ResultInfo)
-	fmt.Println(len(r.Result))
 
 	return &r, nil
 }

@@ -28,4 +28,9 @@ type Server struct {
 
 	// 跨域配置
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
+
+	// jenkins
+	Jenkins Jenkins `mapstructure:"jenkins" json:"jenkins" yaml:"jenkins"`
+	//
+	Telegram Telegram `mapstructure:"telegram" json:"telegram" yaml:"telegram"`
 }
