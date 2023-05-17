@@ -63,18 +63,18 @@ func (is *ImService) GetLines(id int) ([]im.Line, error) {
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	lineLinst, err := reqLines(im.Jsonconfig)
+	lineLinst, err := ReqLines(im.Jsonconfig)
 	return lineLinst, err
 }
 
 func (is *ImService) SaveLines(imid string, lines []im.Line) error {
-	filename := getfilename(imid)
-	err := saveTocos(lines, filename)
+	filename := Getfilename(imid)
+	err := SaveTocos(lines, filename)
 	return err
 }
 
 // 通过 im 的url 字段获取im线路表
-func reqLines(url string) ([]im.Line, error) {
+func ReqLines(url string) ([]im.Line, error) {
 	if url == "" {
 		return nil, errors.New("json 为空")
 	}
@@ -91,7 +91,7 @@ func reqLines(url string) ([]im.Line, error) {
 }
 
 // 向 腾讯cos 保存 修改好的 im 线路
-func saveTocos(lines []im.Line, filename string) error {
+func SaveTocos(lines []im.Line, filename string) error {
 	data := &im.Datas{
 		Data: im.Data{
 			Lines: lines,
@@ -126,7 +126,7 @@ func saveTocos(lines []im.Line, filename string) error {
 }
 
 // 根据im id查询 json name
-func getfilename(imid string) string {
+func Getfilename(imid string) string {
 	var im im.Im
 	db := global.GVA_DB.Where("id=?", imid).Find(&im)
 	if db.Error != nil {
@@ -135,4 +135,14 @@ func getfilename(imid string) string {
 	s := strings.Split(im.Jsonconfig, "/")
 	filename := s[len(s)-1]
 	return filename
+}
+
+// 根据im ip 查询数据库
+func GetIMObj(imip string) *im.Im {
+	var im im.Im
+	db := global.GVA_DB.Where("server_ip=?", imip).Find(&im)
+	if db.Error != nil {
+		log.Println(db.Error.Error())
+	}
+	return &im
 }

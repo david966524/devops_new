@@ -200,8 +200,11 @@ zap:
   log-in-console: true
 jenkins:
   url: http://46.137.193.70:8888/
-  username: admin
-  password: P/IPDezTJGTeH9OLD+YU
+  username: pub_01
+  password: "&w%8w2ZG"
 telegram:
   bottoken: 6253449707:AAHrJoSbZYRSBwYBxzRf1wRsSYsFAwHQWOY
   channelid: -1001968471791
+dns:
+  apikey: 86dcfb4152874d8dea71fa9f8ea9341b
+  apisecret: 0147693b4449a40f3593d1bb57947fa0

@@ -18,7 +18,7 @@ type AsiacloudService struct{}
 
 func (as *AsiacloudService) GetVhost() (asiacloud.VhostResult, error) {
 
-	asiaCloudToken := getAsiaCloudToken()
+	asiaCloudToken := GetAsiaCloudToken()
 	var vhostResult asiacloud.VhostResult
 	vhostUrl := "https://cdnportal.myasiacloud.com/api/proxy/vhost"
 	resp, err := myhttp.HttpClinet().R().
@@ -34,7 +34,7 @@ func (as *AsiacloudService) GetVhost() (asiacloud.VhostResult, error) {
 }
 
 func (as *AsiacloudService) GetDomainListByVhost(vhost string) (*asiacloud.DomainResult, error) {
-	asiaCloudToken := getAsiaCloudToken()
+	asiaCloudToken := GetAsiaCloudToken()
 	var domainResult asiacloud.DomainResult
 	getdomaintUrl := "https://cdnportal.myasiacloud.com/api/site/" + vhost + "/domain/page"
 	resp, err := myhttp.HttpClinet().R().
@@ -50,7 +50,7 @@ func (as *AsiacloudService) GetDomainListByVhost(vhost string) (*asiacloud.Domai
 }
 
 func (as *AsiacloudService) AddDomain(ad *asiacloud.DomainDetails) error {
-	asiaCloudToken := getAsiaCloudToken()
+	asiaCloudToken := GetAsiaCloudToken()
 	addDomainUrl := "https://cdnportal.myasiacloud.com/api/site/" + ad.Vhost + "/domain"
 	_, err := myhttp.HttpClinet().R().
 		EnableTrace().
@@ -66,7 +66,7 @@ func (as *AsiacloudService) AddDomain(ad *asiacloud.DomainDetails) error {
 }
 func (as *AsiacloudService) DeleteDomain(ad *asiacloud.DomainDetails) error {
 	deletedomaintUrl := fmt.Sprintf("https://cdnportal.myasiacloud.com/api/site/%v/domain/%v", ad.Vhost, ad.ID)
-	asiaCloudToken := getAsiaCloudToken()
+	asiaCloudToken := GetAsiaCloudToken()
 	_, err := myhttp.HttpClinet().R().
 		EnableTrace().
 		SetHeader("Content-Type", "application/json").
@@ -81,7 +81,7 @@ func (as *AsiacloudService) DeleteDomain(ad *asiacloud.DomainDetails) error {
 
 func (as *AsiacloudService) UpdateDomain(ad *asiacloud.DomainDetails) error {
 	updatedomaintUrl := fmt.Sprintf("https://cdnportal.myasiacloud.com/api/site/%v/domain/%v", ad.Vhost, ad.ID)
-	asiaCloudToken := getAsiaCloudToken()
+	asiaCloudToken := GetAsiaCloudToken()
 	_, err := myhttp.HttpClinet().R().
 		EnableTrace().
 		SetHeader("Content-Type", "application/json").
@@ -95,7 +95,7 @@ func (as *AsiacloudService) UpdateDomain(ad *asiacloud.DomainDetails) error {
 }
 
 // 获取 亚洲云海token
-func getAsiaCloudToken() string {
+func GetAsiaCloudToken() string {
 	var accunot asiacloud.AsiaCloudAccount
 	result := global.GVA_DB.Where("id=?", 1).Find(&accunot)
 	if result.Error != nil {

@@ -24,6 +24,7 @@ func Routers() *gin.Engine {
 	packageNetRouter := router.RouterGroupApp.PackageNet
 	asiacloudRouter := router.RouterGroupApp.Asiacloud
 	jenkinsRouter := router.RouterGroupApp.Jenkins
+	dnsRouter := router.RouterGroupApp.Dns
 	// 如果想要不使用nginx代理前端网页，可以修改 web/.env.production 下的
 	// VUE_APP_BASE_API = /
 	// VUE_APP_BASE_PATH = http://localhost
@@ -82,6 +83,7 @@ func Routers() *gin.Engine {
 		packageNetRouter.InitAirborneRouter(PrivateGroup)           //包网空降信息路由
 		asiacloudRouter.InitAsiaCloudRouter(PrivateGroup)           //亚洲云海路由
 		jenkinsRouter.InitJenkinsRouter(PrivateGroup)               //jenkins路由
+		dnsRouter.InitDnsRouter(PrivateGroup)                       //帝恩思 路由
 	}
 
 	global.GVA_LOG.Info("router register success")

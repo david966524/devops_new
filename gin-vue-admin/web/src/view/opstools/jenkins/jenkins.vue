@@ -7,7 +7,7 @@
                     <template #default="scope">
                         <el-tag :type="scope.row.color === 'blue' ? 'success' : 'danger'" disable-transitions>{{
                             scope.row.color
-                        }}</el-tag>
+                            }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column align="left" label="任务名" prop="name" width="250" />
@@ -55,7 +55,7 @@
                 <div>构建结果：
                     <el-tag :type="buildinfo.result === 'SUCCESS' ? 'success' : 'danger'" disable-transitions>{{
                         buildinfo.result
-                    }}</el-tag>
+                        }}</el-tag>
                 </div>
                 <div>构建地址 Url：<el-link :href=buildinfo.url target="_blank" type="primary">{{ buildinfo.url }}</el-link>
                 </div>
@@ -79,24 +79,33 @@
 
         <el-dialog v-model="dialogbuildVisible" :before-close="closebuildDialog" title="" width="50%">
             <div>
-                {{ parameters }}
+                <!-- {{ parameters }} -->
                 <li v-for="item in parameters" :key="item">
-                        <div> 
-                            <p class="break-words">{{ item.description }}</p>
-                        </div>
-                        <el-divider border-style="dashed" />
-                    </li>
+                    <div>
+                        <p class="break-words">{{ item.description }}</p>
+                    </div>
+                    <el-divider border-style="dashed" />
+                    <el-form :inline="true" :model="item.defaultParameterValue" class="demo-form-inline">
+                        <el-form-item :label="item.defaultParameterValue.name">
+                            <el-input v-model="item.defaultParameterValue.value" placeholder="" />
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="buildParameter(item.defaultParameterValue.name,item.defaultParameterValue.value)">构建新版本</el-button>
+                        </el-form-item>
+                    </el-form>
+                </li>
             </div>
         </el-dialog>
     </div>
 </template>
 
 <script setup lang="ts">
-import { getjobs, getBuildHistory, getBuildInfo, getConsoleOut, getBuildParameters, onlyBuildJob } from "../../../api/jenkinsapi"
+import { getjobs, getBuildHistory, getBuildInfo, getConsoleOut, getBuildParameters, onlyBuildJob ,buildJobParameter} from "../../../api/jenkinsapi"
 import { ref } from "vue"
 import { ElMessage } from 'element-plus'
 
 const tableData = ref([])
+
 const getJobs = async () => {
     const data = await getjobs()
     console.log(data.data)
@@ -107,7 +116,7 @@ const dialogbuildinfoVisible = ref(false)
 const closeDialog = ref(false)
 const closebuildDialog = ref(false)
 const dialogconsoleOutVisible = ref(false)
-const dialogbuildVisible =ref(false)
+const dialogbuildVisible = ref(false)
 const consoleOut = ref()
 getJobs()
 
@@ -143,6 +152,7 @@ const buildJob = async (row) => {
         console.log("参数化构建")
         dialogbuildVisible.value = true
         parameters.value = data.data
+        jobname.value = row.name
         return
     }
     //没有构建参数 直接构建
@@ -152,6 +162,23 @@ const buildJob = async (row) => {
     if (req.code === 0) {
         ElMessage({
             message: req.msg,
+            type: 'success',
+        })
+    }
+}
+
+const buildParameter = async (name,value) => {
+
+    console.log(name,value)
+    const data:any = await buildJobParameter({
+        name: jobname.value,
+        paraName: name,
+        paraValue: value
+    })
+    if (data.code === 0){
+        closebuildDialog.value=false
+        ElMessage({
+            message: data.msg,
             type: 'success',
         })
     }

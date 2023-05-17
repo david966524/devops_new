@@ -83,8 +83,24 @@ func (ja *JenkinsApi) BuildJob(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	fmt.Println(jobinfo)
 	buildid, err := jenkinsService.Buildjob(&jobinfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	msg := fmt.Sprintf("构建中 %v", buildid)
+	response.OkWithMessage(msg, c)
+}
+
+func (ja *JenkinsApi) BuildJobParameter(c *gin.Context) {
+	var jobinfo jenkins.JobInfo
+	err := c.ShouldBindJSON(&jobinfo)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	fmt.Println(jobinfo)
+	buildid, err := jenkinsService.BuildJobParameter(&jobinfo)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

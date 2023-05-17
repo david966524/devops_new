@@ -15,6 +15,7 @@ func (jr *JenkinsRouter) InitJenkinsRouter(Router *gin.RouterGroup) {
 	getConsoleOut := v1.ApiGroupApp.JenkinsGroup.JenkinsApi.GetBuildConsoleOut
 	getBuildParameters := v1.ApiGroupApp.JenkinsGroup.JenkinsApi.GetBuildParameters
 	buildJob := v1.ApiGroupApp.JenkinsGroup.JenkinsApi.BuildJob
+	buildJobPara := v1.ApiGroupApp.JenkinsGroup.JenkinsApi.BuildJobParameter
 	{
 		jenkinsRouter.GET("/jobs", getJobs)
 		jenkinsRouter.GET("/jobs/build", getJobBuildHistory)
@@ -22,6 +23,7 @@ func (jr *JenkinsRouter) InitJenkinsRouter(Router *gin.RouterGroup) {
 		jenkinsRouter.GET("/jobs/build/info/consoleout", getConsoleOut)
 		jenkinsRouter.GET("/jobs/build/parameters", getBuildParameters)
 		jenkinsRouter.POST("/jobs/build", buildJob)
+		jenkinsRouter.POST("/jobs/buildpara", buildJobPara)
 	}
 
 }

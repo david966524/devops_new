@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/apimanager"
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/asiacloud"
+	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/dns"
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/jenkins"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/cloudflare"
@@ -19,6 +20,7 @@ type ApiGroup struct {
 	PackageNetGroup packagenet.ApiGroup
 	AsiacloudGroup  asiacloud.ApiGroup
 	JenkinsGroup    jenkins.ApiGroup
+	DnsGroup        dns.ApiGroup
 }
 
 var ApiGroupApp = new(ApiGroup)

@@ -4,6 +4,7 @@ import (
 	"github.com/flipped-aurora/gin-vue-admin/server/service/apimanager"
 	"github.com/flipped-aurora/gin-vue-admin/server/service/asiacloud"
 	"github.com/flipped-aurora/gin-vue-admin/server/service/cloudflare"
+	"github.com/flipped-aurora/gin-vue-admin/server/service/dns"
 	"github.com/flipped-aurora/gin-vue-admin/server/service/example"
 	"github.com/flipped-aurora/gin-vue-admin/server/service/jenkins"
 	packagenet "github.com/flipped-aurora/gin-vue-admin/server/service/packageNet"
@@ -18,6 +19,7 @@ type ServiceGroup struct {
 	PackageNetGroup       packagenet.ServiceGroup
 	AsiacloudGroup        asiacloud.ServiceGroup
 	JenkinsGroup          jenkins.ServiceGroup
+	DnsGroup              dns.ServiceGroup
 }
 
 var ServiceGroupApp = new(ServiceGroup)

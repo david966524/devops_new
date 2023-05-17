@@ -50,3 +50,11 @@ export const onlyBuildJob = (data) => {
         data
     })
 }
+
+export const buildJobParameter = (data) => {
+    return service({
+        url: '/jenkins/jobs/buildpara',
+        method: 'post',
+        data
+    })
+}

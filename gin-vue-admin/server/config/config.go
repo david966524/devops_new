@@ -31,6 +31,10 @@ type Server struct {
 
 	// jenkins
 	Jenkins Jenkins `mapstructure:"jenkins" json:"jenkins" yaml:"jenkins"`
-	//
+
+	//telegram
 	Telegram Telegram `mapstructure:"telegram" json:"telegram" yaml:"telegram"`
+
+	//Dns 帝恩思
+	Dns Dns `mapstructure:"dns" json:"dns" yaml:"dns"`
 }

@@ -109,13 +109,38 @@ func (js *JenkinsService) GetBuildParameters(jobinfo model.JobInfo) ([]gojenkins
 
 func (js *JenkinsService) Buildjob(jobinfo *model.JobInfo) (int64, error) {
 	contxt := context.Background()
-	buildId, err := jenkinsClient().BuildJob(contxt, jobinfo.Name, nil)
+	job, _ := jenkinsClient().GetJob(contxt, jobinfo.Name)
+	buildId, err := job.Jenkins.BuildJob(contxt, jobinfo.Name, nil)
 	if err != nil {
 		return buildId, err
 	}
 	msg := fmt.Sprintf(`
-		%v 已经出发构建
-	`, jobinfo.Name)
-	telegram.SendTgMsg(msg)
+	jenkins message
+		%v 已经触发构建 
+		url: %v
+	`, jobinfo.Name, job.Raw.URL)
+	go func() {
+		telegram.SendTgMsg(msg)
+	}()
+	return buildId, err
+}
+
+func (js *JenkinsService) BuildJobParameter(jobinfo *model.JobInfo) (int64, error) {
+	contxt := context.Background()
+	paramsMap := make(map[string]string)
+	paramsMap[jobinfo.ParameterName] = jobinfo.ParameterValue
+	job, _ := jenkinsClient().GetJob(contxt, jobinfo.Name)
+	buildId, err := job.Jenkins.BuildJob(contxt, jobinfo.Name, paramsMap)
+	if err != nil {
+		return buildId, err
+	}
+	msg := fmt.Sprintf(`
+	jenkins message
+		%v 已经触发构建 
+		url: %v
+	`, jobinfo.Name, job.Raw.URL)
+	go func() {
+		telegram.SendTgMsg(msg)
+	}()
 	return buildId, err
 }
