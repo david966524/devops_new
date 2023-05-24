@@ -12,6 +12,7 @@ func (cf *cloudflareApi) GetAll(c *gin.Context) {
 	r, err := service.ServiceGroupApp.CfServiceGroup.GetList()
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.OkWithData(r.Result, c)
 }

@@ -52,6 +52,7 @@ func (imapi *ImApi) DeleteIm(c *gin.Context) {
 	}
 	if err := imService.DeleteIm(&im); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.OkWithMessage("删除成功", c)
 }
@@ -64,6 +65,7 @@ func (imapi *ImApi) CreateIm(c *gin.Context) {
 	}
 	if err := imService.CreateIm(&im); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.OkWithMessage("添加成功", c)
 }
@@ -78,6 +80,7 @@ func (imapi *ImApi) GetLines(c *gin.Context) {
 	lines, err := imService.GetLines(int(im.ID))
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.OkWithData(lines, c)
 }
@@ -87,10 +90,12 @@ func (imapi *ImApi) SaveLines(c *gin.Context) {
 	id := c.Param("id")
 	if err := c.ShouldBindJSON(&lines); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 
 	if err := imService.SaveLines(id, lines); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.Ok(c)
 }

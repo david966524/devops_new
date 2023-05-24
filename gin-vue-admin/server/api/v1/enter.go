@@ -3,6 +3,7 @@ package v1
 import (
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/apimanager"
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/asiacloud"
+	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/checkdomain"
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/dns"
 	"github.com/flipped-aurora/gin-vue-admin/server/api/v1/jenkins"
 
@@ -13,14 +14,15 @@ import (
 )
 
 type ApiGroup struct {
-	SystemApiGroup  system.ApiGroup
-	ExampleApiGroup example.ApiGroup
-	CfApiGroup      cloudflare.ApiGroup
-	ApiManagerGroup apimanager.ApiGroup
-	PackageNetGroup packagenet.ApiGroup
-	AsiacloudGroup  asiacloud.ApiGroup
-	JenkinsGroup    jenkins.ApiGroup
-	DnsGroup        dns.ApiGroup
+	SystemApiGroup   system.ApiGroup
+	ExampleApiGroup  example.ApiGroup
+	CfApiGroup       cloudflare.ApiGroup
+	ApiManagerGroup  apimanager.ApiGroup
+	PackageNetGroup  packagenet.ApiGroup
+	AsiacloudGroup   asiacloud.ApiGroup
+	JenkinsGroup     jenkins.ApiGroup
+	DnsGroup         dns.ApiGroup
+	CheckDomainGroup checkdomain.ApiGroup
 }
 
 var ApiGroupApp = new(ApiGroup)

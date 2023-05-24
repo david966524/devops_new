@@ -70,6 +70,7 @@ func (da *DnsApi) AutoAddIm(c *gin.Context) {
 	err1 := dnsService.AutoAddIm(autoRecordim)
 	if err1 != nil {
 		response.FailWithMessage(err1.Error(), c)
+		return
 	}
 	response.OkWithMessage("添加成功", c)
 }

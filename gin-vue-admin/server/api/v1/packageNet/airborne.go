@@ -39,6 +39,7 @@ func (aba *AirborneApi) UpdateAirborne(c *gin.Context) {
 	}
 	if err := airborneService.UpdateAirborne(&ab); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.OkWithMessage("更新成功", c)
 }
@@ -51,6 +52,7 @@ func (aba *AirborneApi) DeleteAirborne(c *gin.Context) {
 	}
 	if err := airborneService.DeleteAirborne(&ab); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.OkWithMessage("删除成功", c)
 }
@@ -63,6 +65,7 @@ func (aba *AirborneApi) CreateAirborne(c *gin.Context) {
 	}
 	if err := airborneService.CreateAirborne(&ab); err != nil {
 		response.FailWithMessage(err.Error(), c)
+		return
 	}
 	response.OkWithMessage("添加成功", c)
 }

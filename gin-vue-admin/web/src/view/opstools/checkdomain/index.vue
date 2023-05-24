@@ -16,16 +16,13 @@
                     </div>
                     <div slot="header" class="clear-fix">
                         <i class="float-right el-icon-arrow-down"></i>
-                        <el-descriptions title="User Info" column="1">
-                            <el-descriptions-item label="Username">kooriookami</el-descriptions-item>
-                            <el-descriptions-item label="Telephone">18100000000</el-descriptions-item>
-                            <el-descriptions-item label="Place">Suzhou</el-descriptions-item>
-                            <el-descriptions-item label="Remarks">
-                                <el-tag size="small">School</el-tag>
-                            </el-descriptions-item>
-                            <el-descriptions-item label="Address">No.1188, Wuzhong Avenue, Wuzhong District, Suzhou,
-                                Jiangsu
-                                Province</el-descriptions-item>
+                        <el-descriptions title="Info" column="1"  >
+                            <el-descriptions-item label="域名"  >{{ result.url }}</el-descriptions-item>
+                            <el-descriptions-item label="QQ"> {{ result.qq_msg }}</el-descriptions-item>
+                            <el-descriptions-item label="微信">{{ result.vx_msg }}</el-descriptions-item>
+                            <el-descriptions-item label="原因">{{ result.cause }}</el-descriptions-item>
+                            <el-descriptions-item label="icp">{{ result.icp }}</el-descriptions-item>
+                            <el-descriptions-item label="icp 信息">{{ result.icp_name }}</el-descriptions-item>
                         </el-descriptions>
                     </div>
                 </el-card>
@@ -36,6 +33,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue"
+import { CheckDomain } from "../../../api/chenckdomain"
 import { ElMessage } from 'element-plus'
 import {
     Check,
@@ -50,8 +48,20 @@ const form = ref({
     url: ""
 })
 
+const result = ref({
+    url: "",
+    qq_msg: "",
+    vx_msg: "",
+    cause: "",
+    icp_name: "",
+    icp: ""
+})
+
 const checkDomain = async () => {
-    console.log(form.value.url)
+    const data = await CheckDomain({
+        Url: form.value.url,
+    })
+    result.value = data.data
 }
 </script>
 
@@ -61,4 +71,6 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
